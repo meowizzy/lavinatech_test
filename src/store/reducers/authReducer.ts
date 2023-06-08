@@ -1,18 +1,23 @@
 import { AuthAction, AuthState, AuthActionTypes } from "../types/auth";
 
 const initialState: AuthState = {
-     token: "",
+     info: {
+          token: "",
+          key: "",
+          email: "",
+          secret: ""
+     },
      error: null
 };
 
 export const authReducer = (state = initialState, action: AuthAction): AuthState => {
      switch(action.type) {
           case AuthActionTypes.AUTH_SUCCESS: 
-               return { ...state, token: action.payload, error: null };
+               return { ...state, info: { token: action.payload.token, key: action.payload.key, email: action.payload.email, secret: action.payload.secret }, error: null };
           case AuthActionTypes.AUTH_ERROR: 
-               return { ...state, token: "", error: action.payload }
+               return { ...state, info: { token: "", key: "", email: "", secret: "" }, error: action.payload }
           case AuthActionTypes.AUTH_REMOVE:
-               return { ...state, token: "", error: null }
+               return { ...state, info: { token: "", key: "", email: "", secret: "" }, error: null }
           default: return state;
      }
 };

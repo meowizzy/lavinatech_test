@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Typography, CircularProgress, FormHelperText  } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from "react-redux";
+import fetchAuth from "../../services/fetchAuth";
 import MD5 from "crypto-js/md5";
 import LoginForm from "../../components/LoginForm";
-import { API } from "../../api/constants";
 import { AuthSuccessAction, AuthErrorAction } from "../../store/actions/auth";
 
 
@@ -25,27 +25,21 @@ const Login: React.FC = () => {
           const url = "/myself";
           const md5 = MD5(`GET${url}${data.secret}`);
           setLoading(true);
-          fetch(`${API}${url}`, {
-          method: "GET",
-          headers: {
-               Key: data.key,
-               Sign: md5.toString()
-          }
-     })
-          .then((response) => response.json())
-          .then((result) => {
-               if (result.isOk) {
-                    dispatch(AuthSuccessAction(md5.toString()));
-                    navigate('/');
-               }
-               else setIsAuth(false);
-               setLoading(false);
-          })
-          .catch((e) => {
-               setLoading(false);
-               dispatch(AuthErrorAction("Failed to auth."));
-               console.log(e);
-          });
+
+          fetchAuth({key: data.key, secret: data.secret}, url)
+               .then(res => {
+                    if (res.isOk) {
+                         dispatch(AuthSuccessAction({ token: md5.toString(), email: res.data.email, key: res.data.key, secret: res.data.secret }));
+                         navigate('/');
+                    }
+                    else setIsAuth(false);
+                    setLoading(false);
+               })
+               .catch((e) => {
+                    setLoading(false);
+                    dispatch(AuthErrorAction("Failed to fetch."));
+                    console.log(e);
+               });
      });
 
      return (

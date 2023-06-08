@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Typography, CircularProgress } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import RegisterForm from "../../components/RegisterForm.tsx";
+import RegisterForm from "../../components/RegisterForm";
 
 import { API } from "../../api/constants";
 
@@ -30,7 +30,7 @@ const Register: React.FC = () => {
                body: JSON.stringify(data)
           })
           .then((response) => response.json())
-          .then((result) => {
+          .then(() => {
                setLoading(false);
                navigate('/login');
           })

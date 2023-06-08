@@ -4,14 +4,21 @@ export enum AuthActionTypes {
      AUTH_ERROR = "AUTH_ERROR"
 };
 
+export interface UserInfo {
+     token: string,
+     key: string,
+     email: string,
+     secret: string
+}
+
 export interface AuthState {
-     token: string;
+     info: UserInfo
      error: null | string
 };
 
 interface AuthSuccessAction {
      type: AuthActionTypes.AUTH_SUCCESS;
-     payload: string
+     payload: UserInfo
 };
 
 interface AuthRemoveAction {
@@ -20,7 +27,7 @@ interface AuthRemoveAction {
 
 interface AuthErrorAction {
      type: AuthActionTypes.AUTH_ERROR;
-     payload: string;
+     payload: string | null;
 };
 
 export type AuthAction = AuthSuccessAction | AuthRemoveAction | AuthErrorAction;

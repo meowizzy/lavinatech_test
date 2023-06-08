@@ -1,6 +1,6 @@
-import { AuthActionTypes, AuthAction } from "../types/auth"
+import { AuthActionTypes, AuthAction, UserInfo } from "../types/auth"
 
-export const AuthSuccessAction = (payload: string): AuthAction => {
+export const AuthSuccessAction = (payload: UserInfo): AuthAction => {
      return { type: AuthActionTypes.AUTH_SUCCESS, payload: payload}
 };
 
