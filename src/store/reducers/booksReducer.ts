@@ -1,6 +1,6 @@
 import { BooksActionTypes, BooksInfo, BooksState, BooksAction } from "../types/books";
 
-const initialState = {
+const initialState: BooksState = {
     books: [],
     error: "",
     success: ""
@@ -9,9 +9,9 @@ const initialState = {
 export const booksReducer = (state = initialState, action: BooksAction): BooksState => {
     switch(action.type) {
         case BooksActionTypes.BOOKS_ADD:
-            return { ...state, books: action.payload, error: "", success: "Book added successfully" }
+            return { ...state, books: action.payload, error: "", success: "" }
         case BooksActionTypes.BOOKS_REMOVE:
-            return { ...state, books: state.books.filter((item: BooksInfo) => item.isbn !== action.payload), error: "", success: ""}
+            return { ...state, books: state.books.filter((item: BooksInfo) => item.id !== action.payload), error: "", success: ""}
         case BooksActionTypes.BOOKS_ERROR:
             return { ...state, error: action.payload, books: [], success: ""}
         default: return state;

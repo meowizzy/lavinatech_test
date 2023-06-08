@@ -1,6 +1,6 @@
 import { BooksActionTypes, BooksAction, BooksInfo } from "../types/books"
 
-export const BooksAddAction = (payload: BooksInfo): BooksAction => {
+export const BooksAddAction = (payload: BooksInfo[]): BooksAction => {
      return { type: BooksActionTypes.BOOKS_ADD, payload: payload}
 };
 

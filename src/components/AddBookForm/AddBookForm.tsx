@@ -12,10 +12,10 @@ export const AddBookForm: React.FC = () => {
     const dispatch = useDispatch();
     const state = useTypedSelector(state => state);
     const { key, secret } = state.auth.info;
-    const { books, error,  } = state.;
+    const { error, success  } = state.books;
 
     const handleClick = () => {
-        if (!isbn.length) return;
+        if (!isbn.length && isbn.length < 13) return;
         const url = '/books';
         const body = { isbn: isbn };
         const headers = {key: key, secret: secret};
@@ -24,7 +24,10 @@ export const AddBookForm: React.FC = () => {
         postUpdate("POST", body, headers, url)
             .then(res => {
                 if (!res.isOk) dispatch(BooksErrorAction(res.message));
-                else dispatch(BooksAddAction(res.data));
+                else {
+                    dispatch(BooksAddAction([res.data]));
+                    setIsbn('');
+                }
                 setLoading(false);
             });
         
@@ -50,7 +53,7 @@ export const AddBookForm: React.FC = () => {
             >
                 Add book
             </Button>
-            { !!succes.length && <Typography variant="subtitle1" align="left" style={{width: "100%", margin: "0 10px 10px 10px"}}>{succes}</Typography> }
+            { !!success.length && <Typography variant="subtitle1" align="left" style={{width: "100%", margin: "0 10px 10px 10px"}}>{success}</Typography> }
         </div>
     );
 };

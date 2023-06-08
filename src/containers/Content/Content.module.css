@@ -14,5 +14,6 @@
 }
 
 .columns_right {
-
+    max-height: 700px;
+    overflow: auto;
 }

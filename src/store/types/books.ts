@@ -15,7 +15,7 @@ export interface BooksInfo {
 };
 
 export interface BooksState {
-    books: BooksInfo[] | BooksInfo,
+    books: Array<BooksInfo>,
     error: string,
     success: string
 };
@@ -23,7 +23,7 @@ export interface BooksState {
 
 interface BooksAddAction {
     type: BooksActionTypes.BOOKS_ADD;
-    payload: BooksInfo[] | BooksInfo
+    payload: Array<BooksInfo>
 };
 
 interface BooksRemoveAction {
